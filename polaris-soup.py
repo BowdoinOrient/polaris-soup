@@ -1,9 +1,5 @@
 from bs4 import BeautifulSoup
 
-def target_tag(tag):
-    print tag.contents[0]
-    return tag(rowspan = "1")
-
 fname = "./data.html"
 with open(fname) as file:
     htmllist = file.readlines()
@@ -11,12 +7,12 @@ with open(fname) as file:
 
 soup = BeautifulSoup(html)
 
-tds = soup.find_all(target_tag)
+rts = soup.find_all("tr", {"class":"rowtop"})
+pds = soup.find_all("tr", {"class":"popdown"})
 
-print len(tds)
+derp = zip(rts, pds)
 
 classes = []
 
-for title, attrs in zip(tds[:-1], tds[1:]):
-    cl = (title, attrs)
-    classes.append(cl)
+for (pd, rt) in derp:
+    classes.append({"title":pd, "detail":rt})
